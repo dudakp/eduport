@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-header">
+    {{ notificationType.title }}
+  </div>
+  <div class="card-body" style="font-size: 0.8rem">    
+      <div *ngFor="let notification of notificationType.body" class="alert alert-primary" role="alert">
+        {{notification}}
+      </div>    
+  </div>
+</div>
