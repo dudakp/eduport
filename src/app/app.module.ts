@@ -9,6 +9,8 @@ import { ProfileBadgeComponent } from './profile-badge/profile-badge.component';
 import { ListCardComponent } from './list-card/list-card.component';
 import { NotificationsCardComponent } from './notifications-card/notifications-card.component';
 import { NewsCardComponent } from './news-card/news-card.component';
+import { LoginComponent } from './login/login.component';
+import { NewsCardDetailPageComponent } from './news-card-detail-page/news-card-detail-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { NewsCardComponent } from './news-card/news-card.component';
     ListCardComponent,
     NotificationsCardComponent,
     NewsCardComponent,
+    LoginComponent,
+    NewsCardDetailPageComponent,
   ],
   imports: [
     BrowserModule,

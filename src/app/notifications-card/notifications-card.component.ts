@@ -9,12 +9,10 @@ export class NotificationsCardComponent implements OnInit {
 
   @Input('notificationType') notificationType: any;
 
-  n = { notifications: [1, 2, 3] };
   constructor() {
   }
 
   ngOnInit() {
-    console.log(this.notificationType);
   }
 
 }

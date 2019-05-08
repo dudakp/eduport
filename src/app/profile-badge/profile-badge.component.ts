@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-profile-badge',
@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileBadgeComponent implements OnInit {
 
-  fullName: String = 'Pavol Dudak';
+  @Input('fullName') fullName: String;    
+
   constructor() { }
 
   ngOnInit() {

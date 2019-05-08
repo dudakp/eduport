@@ -1,9 +1,9 @@
 <div class="card">
   <div class="card-header">
-    {{ listName }}
+    {{ content.listName }}
   </div>
   <div class="card-body">
-    <a *ngFor="let course of coursesEnrolled" href="#" class="badge badge-info">
+    <a *ngFor="let course of content.coursesEnrolled" class="badge badge-info">
       {{ course }}
     </a>
   </div>

@@ -1,11 +1,13 @@
-<div *ngFor="let newsItem of newsItems" class="card">
-    <div class="card-header">
-      {{newsItem.courseName}}
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{newsItem.postTitle}}</h5>
-      <p class="card-text">
-        {{newsItem.postBody}}
-      </p>
-    </div>
+<div class="card">
+  <div class="card-header">
+    <a [routerLink]="['/newsItemDetail']">
+      {{ news.courseName }}
+    </a>
   </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ news.postTitle }}</h5>
+    <p class="card-text">
+      {{ news.postBody }}
+    </p>
+  </div>
+</div>

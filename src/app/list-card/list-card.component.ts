@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-list-card',
@@ -7,8 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListCardComponent implements OnInit {
 
-  listName: string = 'Subjects';
-  coursesEnrolled = ['Artificial Inteligence', 'Object Oriented Programming', 'Mathematics 2'];
+  @Input('content') content: any;
 
   constructor() { }
 
