@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CoursesService} from "../services/course/courses.service";
+import {Course} from "../services/course/course";
+import {Contribution} from "../services/course/contribution";
 
 @Component({
   selector: 'app-card-container',
@@ -6,6 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./card-container.component.sass']
 })
 export class CardContainerComponent implements OnInit {
+
+  coursesEnrolled: Course[];
+  news: Contribution[] = [];
+
+  constructor(private coursesService: CoursesService) {
+  }
+
+  ngOnInit() {
+    this.reload();
+  }
+
+  reload() {
+    this.coursesService.getAll()
+      .subscribe(value => {
+        this.coursesEnrolled = value;
+        value.map(value1 => this.news.push(...value1.contributions));
+        console.log(this.news);
+      });
+  }
 
   notifications = [{
     title: 'Notifications',
@@ -15,35 +37,5 @@ export class CardContainerComponent implements OnInit {
     body: ['MAT2 exam in 3 days', 'New AI study materials']
   }];
 
-  newsItems = [{
-    courseName: 'Object oriented programming',
-    postTitle: 'S.O.L.I.D.',
-    postBody: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras pulvinar molestie lacus quis auctor. Curabitur tellus ex, dapibus ut purus id, condimentum malesuada enim. Mauris a euismod velit, sit amet dictum felis. Duis et arcu at enim viverra eleifend id eu purus. Duis iaculis pharetra dictum. Duis ornare sapien vel ornare faucibus. Donec eros felis, bibendum eu venenatis hendrerit, rutrum sit amet velit. Suspendisse erat velit, dignissim et neque at, vulputate consectetur libero. Proin tellus enim, viverra in ultricie'
-  },
-  {
-    courseName: 'Artificial inteligence',
-    postTitle: 'Neural networks',
-    postBody: 'Vestibulum egestas metus id libero imperdiet, ut tincidunt justo tincidunt. Proin feugiat bibendum tortor eget rutrum. Nam vehicula cursus ante ut dictum. Aliquam aliquet molestie urna id mattis. Mauris viverra sapien sit amet risus egestas, eget sagittis sapien molestie. Integer consectetur consequat ultrices. Sed mollis, risus ut posuere aliquam, nulla tellus rutrum tortor, sed feugiat risus nibh nec libero. Donec pharetra magna eget pharetra pretium. Pellentesque pulvinar dignissim risus, a eleifend diam. Vestibulum mollis erat mauris, eu eleifend magna scelerisque vitae. Ut in nibh nec odio porttitor tincidunt vel ut orci. In rutrum, dolor id molestie imperdiet, quam ipsum ultrices ante, vitae hendrerit quam mauris ac orci.'
-  }, {
-    courseName: 'Artificial inteligence',
-    postTitle: 'Neural networks',
-    postBody: 'Vestibulum egestas metus id libero imperdiet, ut tincidunt justo tincidunt. Proin feugiat bibendum tortor eget rutrum. Nam vehicula cursus ante ut dictum. Aliquam aliquet molestie urna id mattis. Mauris viverra sapien sit amet risus egestas, eget sagittis sapien molestie. Integer consectetur consequat ultrices. Sed mollis, risus ut posuere aliquam, nulla tellus rutrum tortor, sed feugiat risus nibh nec libero. Donec pharetra magna eget pharetra pretium. Pellentesque pulvinar dignissim risus, a eleifend diam. Vestibulum mollis erat mauris, eu eleifend magna scelerisque vitae. Ut in nibh nec odio porttitor tincidunt vel ut orci. In rutrum, dolor id molestie imperdiet, quam ipsum ultrices ante, vitae hendrerit quam mauris ac orci.'
-  }, {
-    courseName: 'Artificial inteligence',
-    postTitle: 'Neural networks',
-    postBody: 'Vestibulum egestas metus id libero imperdiet, ut tincidunt justo tincidunt. Proin feugiat bibendum tortor eget rutrum. Nam vehicula cursus ante ut dictum. Aliquam aliquet molestie urna id mattis. Mauris viverra sapien sit amet risus egestas, eget sagittis sapien molestie. Integer consectetur consequat ultrices. Sed mollis, risus ut posuere aliquam, nulla tellus rutrum tortor, sed feugiat risus nibh nec libero. Donec pharetra magna eget pharetra pretium. Pellentesque pulvinar dignissim risus, a eleifend diam. Vestibulum mollis erat mauris, eu eleifend magna scelerisque vitae. Ut in nibh nec odio porttitor tincidunt vel ut orci. In rutrum, dolor id molestie imperdiet, quam ipsum ultrices ante, vitae hendrerit quam mauris ac orci.'
-  }]
-
-
-  listCard = {
-    listName: 'Courses',
-    coursesEnrolled: ['Artificial Inteligence', 'Object Oriented Programming', 'Mathematics 2']
-  };
-
   userFullName: String = 'Pavol Dudak';
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

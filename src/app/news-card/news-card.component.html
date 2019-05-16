@@ -1,13 +1,14 @@
 <div class="card">
   <div class="card-header">
     <a [routerLink]="['/newsItemDetail']">
-      {{ news.courseName }}
+      <!--      {{ newsItem.title }}-->
     </a>
   </div>
+
   <div class="card-body">
-    <h5 class="card-title">{{ news.postTitle }}</h5>
+    <h5 class="card-t">{{ newsItem.title }}</h5>
     <p class="card-text">
-      {{ news.postBody }}
+      {{ newsItem.content }}
     </p>
   </div>
 </div>

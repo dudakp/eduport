@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Contribution} from "../services/course/contribution";
 
 @Component({
   selector: 'app-news-card',
@@ -6,12 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./news-card.component.sass']
 })
 export class NewsCardComponent implements OnInit {
-  
-  @Input('news') news: any;
-  
-  constructor() { }
+
+  @Input('newsItem') newsItem: Contribution;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }
+
 
 }
