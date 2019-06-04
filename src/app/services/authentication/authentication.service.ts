@@ -1,0 +1,72 @@
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {BehaviorSubject, Observable} from "rxjs";
+import {User} from "./user";
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthenticationService {
+
+  private tokenKey = 'currentUser';
+  private subject = new BehaviorSubject<any>(undefined);
+  private tokenSubject = new BehaviorSubject<string>(undefined);
+
+  constructor(private httpClient: HttpClient) {
+    this.tokenSubject.next(localStorage.getItem(this.tokenKey));
+  }
+
+
+  login(user): Observable<User> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return new Observable(subscriber => {
+        this.httpClient.post('http://localhost:8081/auth/signin', user, {headers: headers, observe: 'response'})
+          .subscribe(user => {
+            console.log(user);
+            let token = user.headers.get('Authorization');
+            if (user && token) {
+              localStorage.setItem(this.tokenKey, token);
+              let userFormToken = this.getUserFromToken(token);
+              this.tokenSubject.next(token);
+              this.subject.next(userFormToken);
+              subscriber.next(userFormToken);
+              subscriber.complete();
+            }
+          });
+      }
+    )
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.subject.next(undefined);
+  }
+
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem(this.tokenKey);
+  }
+
+  getUserFromToken(token: string): any {
+    if (!token) {
+      return;
+    }
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  getCurrentUser(): User {
+    let token = this.tokenSubject.getValue();
+    let parse = JSON.parse(atob(token.split('.')[1]));
+    return parse;
+  }
+
+  onUserChange(): Observable<any> {
+    return this.subject.asObservable();
+  }
+
+  onTokenChange(): Observable<string> {
+    return this.tokenSubject.asObservable();
+  }
+}
