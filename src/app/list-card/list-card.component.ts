@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Course} from "../services/course/course";
+import {Course} from '../services/course/course';
 
 @Component({
   selector: 'app-list-card',
@@ -10,7 +10,7 @@ export class ListCardComponent {
 
   @Input('courses') coursesEnrolled: Course[];
 
-  listName: string = 'Enrolled courses';
+  listName: string = 'Courses';
 
 
 }

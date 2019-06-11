@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {User} from "./user";
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {User} from './user';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AuthenticationService {
   private subject = new BehaviorSubject<any>(undefined);
   private tokenSubject = new BehaviorSubject<string>(undefined);
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient,
+              private toastService: ToastrService) {
     this.tokenSubject.next(localStorage.getItem(this.tokenKey));
   }
 
@@ -23,21 +25,22 @@ export class AuthenticationService {
     });
 
     return new Observable(subscriber => {
-        this.httpClient.post('http://localhost:8081/auth/signin', user, {headers: headers, observe: 'response'})
+      this.httpClient.post('http://localhost:8081/auth/signin', user, {headers, observe: 'response'})
           .subscribe(user => {
-            console.log(user);
-            let token = user.headers.get('Authorization');
+            // console.log(user);
+            const token = user.headers.get('Authorization');
             if (user && token) {
               localStorage.setItem(this.tokenKey, token);
-              let userFormToken = this.getUserFromToken(token);
+              const userFormToken = this.getUserFromToken(token);
               this.tokenSubject.next(token);
               this.subject.next(userFormToken);
               subscriber.next(userFormToken);
+              this.toastService.success(`Logged in as ${this.subject.getValue().username}`);
               subscriber.complete();
             }
           });
       }
-    )
+    );
   }
 
   logout() {
@@ -57,12 +60,14 @@ export class AuthenticationService {
   }
 
   getCurrentUser(): User {
-    let token = this.tokenSubject.getValue();
-    let parse = JSON.parse(atob(token.split('.')[1]));
+    const token = this.tokenSubject.getValue();
+    const parse = JSON.parse(atob(token.split('.')[1]));
     return parse;
   }
 
+
   onUserChange(): Observable<any> {
+    this.subject.next(this.getCurrentUser());
     return this.subject.asObservable();
   }
 

@@ -11,7 +11,15 @@ import {NotificationsCardComponent} from './notifications-card/notifications-car
 import {NewsCardComponent} from './news-card/news-card.component';
 import {LoginComponent} from './login/login.component';
 import {NewsCardDetailPageComponent} from './news-card-detail-page/news-card-detail-page.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
+import {JwtInterceptorService} from './services/authentication/jwt-interceptor.service';
+import {CreateCourseComponent} from './create-course/create-course.component';
+import {CreateContributionComponent} from './create-contribution/create-contribution.component';
+import {NotificationComponent} from './notification/notification.component';
+import {EnrollComponent} from './enroll/enroll.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -23,14 +31,35 @@ import {HttpClientModule} from '@angular/common/http';
     NotificationsCardComponent,
     NewsCardComponent,
     LoginComponent,
-    NewsCardDetailPageComponent
+    NewsCardDetailPageComponent,
+    CreateCourseComponent,
+    CreateContributionComponent,
+    NotificationComponent,
+    EnrollComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-top-right',
+
+      preventDuplicates: true,
+    })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptorService,
+      multi: true
+    }
+    // ,
+    // {provide: BrowserXhr, useClass:CustExtBrowserXhr},
+    // {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

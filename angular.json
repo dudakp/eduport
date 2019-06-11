@@ -29,6 +29,8 @@
             ],
             "styles": [
               "src/styles.sass",
+              "node_modules/ngx-toastr/toastr.css",
+              // try adding '../' if you're using angular cli before 6
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
             "scripts": [

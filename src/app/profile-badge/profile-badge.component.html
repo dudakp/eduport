@@ -5,6 +5,6 @@
     id="profileBadge"
   >
     <i class="fas fa-user"></i>
-    <span class="badge">{{ fullName }} </span>
+    <span class="badge"> {{(user|async)?.username}} </span>
   </button>
 </div>

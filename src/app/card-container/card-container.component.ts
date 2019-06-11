@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {CoursesService} from "../services/course/courses.service";
-import {Course} from "../services/course/course";
-import {Contribution} from "../services/course/contribution";
+import {CoursesService} from '../services/course/courses.service';
+import {Course} from '../services/course/course';
+import {AuthenticationService} from '../services/authentication/authentication.service';
+import {ContributionService} from '../services/contribution/contribution.service';
+import {UserService} from '../services/authentication/user.service';
+import {User} from '../services/authentication/user';
+import {Contribution} from '../services/contribution/contribution';
 
 @Component({
   selector: 'app-card-container',
@@ -10,24 +14,16 @@ import {Contribution} from "../services/course/contribution";
 })
 export class CardContainerComponent implements OnInit {
 
+  constructor(private coursesService: CoursesService,
+              private authService: AuthenticationService,
+              private contributionService: ContributionService,
+              private userService: UserService) {
+  }
+
   coursesEnrolled: Course[];
   news: Contribution[] = [];
+  currentUser: User;
 
-  constructor(private coursesService: CoursesService) {
-  }
-
-  ngOnInit() {
-    this.reload();
-  }
-
-  reload() {
-    this.coursesService.getAll()
-      .subscribe(value => {
-        this.coursesEnrolled = value;
-        value.map(value1 => this.news.push(...value1.contributions));
-        console.log(this.news);
-      });
-  }
 
   notifications = [{
     title: 'Notifications',
@@ -37,5 +33,11 @@ export class CardContainerComponent implements OnInit {
     body: ['MAT2 exam in 3 days', 'New AI study materials']
   }];
 
-  userFullName: String = 'Pavol Dudak';
+  ngOnInit() {
+    this.currentUser = this.userService.getCurrentUser();
+    // console.log(this.authService.getCurrentUser().username);
+    this.contributionService.getContributions(this.currentUser.username).subscribe(contributions => this.news = contributions);
+    this.coursesService.getAllForUser(this.currentUser.username).subscribe(value => this.coursesEnrolled = value);
+  }
+
 }

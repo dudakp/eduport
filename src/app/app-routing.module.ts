@@ -1,12 +1,21 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CardContainerComponent } from './card-container/card-container.component';
-import { NewsCardDetailPageComponent } from './news-card-detail-page/news-card-detail-page.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {CardContainerComponent} from './card-container/card-container.component';
+import {NewsCardDetailPageComponent} from './news-card-detail-page/news-card-detail-page.component';
+import {LoginComponent} from './login/login.component';
+import {AuthGuardService} from './services/authentication/auth-guard.service';
+import {CreateCourseComponent} from './create-course/create-course.component';
+import {CreateContributionComponent} from './create-contribution/create-contribution.component';
+import {EnrollComponent} from './enroll/enroll.component';
 
 const routes: Routes = [
-  {path: 'loggedIn', component: CardContainerComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'loggedIn', component: CardContainerComponent, canActivate: [AuthGuardService]},
   {path: 'newsItemDetail', component: NewsCardDetailPageComponent},
-  {path: '', redirectTo: '/loggedIn', pathMatch: 'full'},
+  {path: 'createCourse', component: CreateCourseComponent},
+  {path: 'createContribution', component: CreateContributionComponent},
+  {path: 'enrollToCourse', component: EnrollComponent},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
 @NgModule({

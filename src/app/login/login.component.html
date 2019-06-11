@@ -1,3 +1,20 @@
+<!--<form (ngSubmit)="login()">-->
+<!--  <div class="form-group">-->
+<!--    <label for="exampleInputEmail1">Username</label>-->
+<!--    <input type="email" class="form-control" id="exampleInputEmail1"-->
+<!--           placeholder="Enter username" name="username"-->
+<!--           [(ngModel)]="user.username">-->
+<!--  </div>-->
+<!--  <div class="form-group">-->
+<!--    <label for="exampleInputPassword1">Password</label>-->
+<!--    <input type="password" class="form-control" id="exampleInputPassword1"-->
+<!--           placeholder="Password" name="password"-->
+<!--           [(ngModel)]="user.password">-->
+<!--  </div>-->
+<!--  <button type="submit" class="btn btn-primary">Submit</button>-->
+<!--</form>-->
+
+
 <div class="container">
   <div class="row">
     <div class="col col-11 offset-0.5">
@@ -11,45 +28,27 @@
               <div class="row">
                 <div class="col col-6">
                   <div class="card">
-                    <img class="card-img-top" src="" alt="" />
+                    <img class="card-img-top" src="" alt=""/>
                     <div class="card-body">
                       <h4 class="card-title">Login</h4>
                       <div class="card-text">
-                        <form>
+
+                        <form (ngSubmit)="login()">
                           <div class="form-group">
-                            <label for="exampleInputEmail1"
-                              >Email address</label
-                            >
-                            <input
-                              type="email"
-                              class="form-control"
-                              id="exampleInputEmail1"
-                              aria-describedby="emailHelp"
-                              placeholder="Enter email"
-                            />
-                            <small id="emailHelp" class="form-text text-muted"
-                              >We'll never share your email with anyone
-                              else.</small
-                            >
+                            <label for="exampleInputEmail1">Username</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1"
+                                   placeholder="Enter username" name="username"
+                                   [(ngModel)]="user.username">
                           </div>
                           <div class="form-group">
                             <label for="exampleInputPassword1">Password</label>
-                            <input
-                              type="password"
-                              class="form-control"
-                              id="exampleInputPassword1"
-                              placeholder="Password"
-                            />
+                            <input type="password" class="form-control" id="exampleInputPassword1"
+                                   placeholder="Password" name="password"
+                                   [(ngModel)]="user.password">
                           </div>
-                          <button
-                            [routerLink]="['/loggedIn']"
-                            (click)="login()"
-                            type="submit"
-                            class="btn btn-primary"
-                          >
-                            Submit
-                          </button>
+                          <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
+
                       </div>
                     </div>
                   </div>
@@ -61,11 +60,11 @@
                       <div class="card-body">
                         <p>Register for full access</p>
                         <a class="btn btn-primary" href="#" role="button"
-                          >Register</a
+                        >Register</a
                         >
                         <p>Register as guest</p>
                         <a class="btn btn-secondary" href="#" role="button"
-                          >Guest register</a
+                        >Guest register</a
                         >
                       </div>
                     </div>
