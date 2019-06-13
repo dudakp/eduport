@@ -25,7 +25,7 @@ export class AuthenticationService {
     });
 
     return new Observable(subscriber => {
-      this.httpClient.post('http://localhost:8081/auth/signin', user, {headers, observe: 'response'})
+        this.httpClient.post('http://localhost:8081/auth/signin', user, {headers, observe: 'response'})
           .subscribe(user => {
             // console.log(user);
             const token = user.headers.get('Authorization');
@@ -41,6 +41,10 @@ export class AuthenticationService {
           });
       }
     );
+  }
+
+  register(user: User): Observable<User> {
+    return this.httpClient.post<User>('http://localhost:8081/auth/register', user);
   }
 
   logout() {
@@ -61,8 +65,11 @@ export class AuthenticationService {
 
   getCurrentUser(): User {
     const token = this.tokenSubject.getValue();
-    const parse = JSON.parse(atob(token.split('.')[1]));
-    return parse;
+    return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  isStudentLoggedIn() {
+    return this.getCurrentUser().roles.includes('ROLE_STUDENT');
   }
 
 

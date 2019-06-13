@@ -3,18 +3,27 @@
     <div class="col col-3 ">
       <!--      <app-login></app-login>-->
       <app-profile-badge></app-profile-badge>
-      <app-list-card [courses]="coursesEnrolled"></app-list-card>
+      <app-list-card *ngIf="authService.isStudentLoggedIn()"
+                     [courses]="coursesEnrolled"></app-list-card>
+
+      <app-list-card *ngIf="!authService.isStudentLoggedIn()"
+                     [courses]="allCourses"></app-list-card>
     </div>
-    <div class="col col-6 ">
-      <app-news-card *ngFor="let newsItem of news" [newsItem]="newsItem">
-      </app-news-card>
+
+    <div class="col col-9 " *ngIf="authService.isStudentLoggedIn()">
+      <app-news-card
+        *ngFor="let newsItem of news" [newsItem]="newsItem"></app-news-card>
     </div>
-    <div class="col col-3 ">
-      <app-notifications-card
-        *ngFor="let card of notifications"
-        [notificationType]="card"
-      ></app-notifications-card>
+    <div class="col col-9 " *ngIf="!authService.isStudentLoggedIn()">
+      <app-news-card
+        *ngFor="let student of students" [student]="student"></app-news-card>
     </div>
+
+    <!--    <div class="col col-3 ">-->
+    <!--      <app-notifications-card-->
+    <!--        *ngFor="let card of notifications"-->
+    <!--        [notificationType]="card"-->
+    <!--      ></app-notifications-card>-->
+    <!--    </div>-->
   </div>
 </div>
-<!--[courseName]="getCourseByIdInternal(newsItem.course)-->

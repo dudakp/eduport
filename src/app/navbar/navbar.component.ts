@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../services/authentication/authentication.service';
 import {Router} from '@angular/router';
 import {User} from '../services/authentication/user';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,15 +11,13 @@ import {User} from '../services/authentication/user';
 })
 export class NavbarComponent implements OnInit {
 
-  public user: User;
+  public user: Observable<User>;
 
   constructor(private authService: AuthenticationService, private router: Router) {
   }
 
   ngOnInit() {
-    this.authService.onUserChange().subscribe(user => {
-      this.user = user;
-    });
+    this.user = this.authService.onUserChange();
   }
 
   isLoggedIn(): boolean {

@@ -1,0 +1,22 @@
+<div class="container">
+  <form>
+    <div class="form-group">
+      <label for="exampleFormControlSelect1">Select course</label>
+      <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="forCourse" name="courseSelect">
+        <option *ngFor="let course of courses" [value]="course.abbreviation">{{course.title}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="contributionTitle">Contribution title</label>
+      <input type="text" class="form-control" id="contributionTitle" name="name"
+             [(ngModel)]="contribution.title"
+             placeholder="Title">
+    </div>
+    <div class="form-group">
+      <label for="contributionBody">Contribution body</label>
+      <textarea class="form-control" id="contributionBody" name="contribBody" rows="7"
+                [(ngModel)]="contribution.content"></textarea>
+    </div>
+  </form>
+  <button type="button" class="btn btn-primary" (click)="createContribution(forCourse)">Submit contribution</button>
+</div>

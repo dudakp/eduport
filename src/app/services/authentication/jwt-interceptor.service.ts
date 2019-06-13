@@ -3,6 +3,7 @@ import {HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest}
 import {AuthenticationService} from './authentication.service';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class JwtInterceptorService implements HttpInterceptor {
 
   private token: string;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(private authService: AuthenticationService,
+              private toastService: ToastrService) {
     authService.onTokenChange()
       .subscribe(token => {
         this.token = token;
@@ -24,7 +26,7 @@ export class JwtInterceptorService implements HttpInterceptor {
         Authorization: `${this.token}`
       }
     });
-    console.log(req);
+    // console.log(req);
 
     return next.handle(req)
       .pipe(
@@ -34,10 +36,10 @@ export class JwtInterceptorService implements HttpInterceptor {
             // client-side error
             errorMessage = `Error: ${error.error.message}`;
           } else {
-            // server-side error
             errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            // server-side error
+            this.toastService.error(errorMessage);
           }
-          //window.alert(errorMessage);
           return throwError(errorMessage);
         })
       );

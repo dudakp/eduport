@@ -43,11 +43,12 @@
         </a>
 
         <div class="dropdown-menu" ngDropdownMenu>
-          <a class="dropdown-item" ngDefaultControl *ngIf="user.roles.includes('ROLE_TEACHER')"
+          <a class="dropdown-item" ngDefaultControl *ngIf="(user|async)?.roles.includes('ROLE_TEACHER')"
              [routerLink]="['/createCourse']">Add Course</a>
-          <a class="dropdown-item" *ngIf="user.roles.includes('ROLE_TEACHER')" [routerLink]="['/createContribution']">Add
+          <a class="dropdown-item" *ngIf="(user|async)?.roles.includes('ROLE_TEACHER')" [routerLink]="['/createContribution']">Add
             Contribution</a>
-          <a class="dropdown-item" *ngIf="user.roles.includes('ROLE_STUDENT')" [routerLink]="['/enrollToCourse']">Enroll
+          <a class="dropdown-item" *ngIf="(user|async)?.roles.includes('ROLE_TEACHER')" [routerLink]="['/enrollToCourse']">Delete contribution</a>
+          <a class="dropdown-item" *ngIf="(user|async)?.roles.includes('ROLE_STUDENT')" [routerLink]="['/enrollToCourse']">Enroll
             to course</a>
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>

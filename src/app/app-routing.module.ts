@@ -11,10 +11,12 @@ import {EnrollComponent} from './enroll/enroll.component';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'loggedIn', component: CardContainerComponent, canActivate: [AuthGuardService]},
-  {path: 'newsItemDetail', component: NewsCardDetailPageComponent},
-  {path: 'createCourse', component: CreateCourseComponent},
-  {path: 'createContribution', component: CreateContributionComponent},
-  {path: 'enrollToCourse', component: EnrollComponent},
+  {path: 'newsItemDetail', component: NewsCardDetailPageComponent, canActivate: [AuthGuardService]},
+  {path: 'createCourse', component: CreateCourseComponent, canActivate: [AuthGuardService]},
+  {path: 'createContribution', component: CreateContributionComponent, canActivate: [AuthGuardService]},
+  {path: 'enrollToCourse', component: EnrollComponent, canActivate: [AuthGuardService]},
+  {path: 'courseDetail/:id', component: NewsCardDetailPageComponent, canActivate: [AuthGuardService]},
+  {path: 'studentDetail/:id', component: NewsCardDetailPageComponent, canActivate: [AuthGuardService]},
   {path: '', redirectTo: '/login', pathMatch: 'full'},
 ];
 
@@ -22,4 +24,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

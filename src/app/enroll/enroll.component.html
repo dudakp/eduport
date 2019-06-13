@@ -1,0 +1,12 @@
+<div class="container" *ngIf="userService.isStudentLoggedIn()">
+  <h1>Available courses</h1>
+  <button *ngFor="let course of courses" type="button"
+          (click)="enrollToCourse(course)"
+          class="btn btn-primary btn-lg btn-block">{{course.title}}</button>
+</div>
+<div class="container" *ngIf="!userService.isStudentLoggedIn()">
+  <h1>All Contributions</h1>
+  <button *ngFor="let contrib of contribs" type="button"
+          (click)="deleteContribution(contrib)"
+          class="btn btn-primary btn-lg btn-block">{{contrib.title + ' -> ' + contrib.course.abbreviation}}</button>
+</div>

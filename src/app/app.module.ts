@@ -20,6 +20,7 @@ import {NotificationComponent} from './notification/notification.component';
 import {EnrollComponent} from './enroll/enroll.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import { RegisterPageComponent } from './register-page/register-page.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {ToastrModule} from 'ngx-toastr';
     CreateCourseComponent,
     CreateContributionComponent,
     NotificationComponent,
-    EnrollComponent
+    EnrollComponent,
+    RegisterPageComponent
   ],
   imports: [
     BrowserModule,

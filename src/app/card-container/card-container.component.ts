@@ -6,6 +6,7 @@ import {ContributionService} from '../services/contribution/contribution.service
 import {UserService} from '../services/authentication/user.service';
 import {User} from '../services/authentication/user';
 import {Contribution} from '../services/contribution/contribution';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-card-container',
@@ -14,30 +15,45 @@ import {Contribution} from '../services/contribution/contribution';
 })
 export class CardContainerComponent implements OnInit {
 
-  constructor(private coursesService: CoursesService,
-              private authService: AuthenticationService,
-              private contributionService: ContributionService,
-              private userService: UserService) {
+  constructor(
+    private coursesService: CoursesService,
+    private authService: AuthenticationService,
+    private contributionService: ContributionService,
+    private userService: UserService) {
   }
 
   coursesEnrolled: Course[];
-  news: Contribution[] = [];
+  allCourses: Course[];
+  currentUserObservable: Observable<User>;
   currentUser: User;
 
-
-  notifications = [{
-    title: 'Notifications',
-    body: ['OOP bonus points added', 'New AI study materials']
-  }, {
-    title: 'Tasks',
-    body: ['MAT2 exam in 3 days', 'New AI study materials']
-  }];
+  news: Contribution[] = [];
+  students: User[] = [];
 
   ngOnInit() {
-    this.currentUser = this.userService.getCurrentUser();
-    // console.log(this.authService.getCurrentUser().username);
-    this.contributionService.getContributions(this.currentUser.username).subscribe(contributions => this.news = contributions);
-    this.coursesService.getAllForUser(this.currentUser.username).subscribe(value => this.coursesEnrolled = value);
+    this.currentUserObservable = this.authService.onUserChange();
+    this.currentUserObservable.subscribe(value => this.currentUser = value);
+
+    if (this.isStudentLoggedIn()) {
+      this.contributionService.getContributions(this.currentUser.username).subscribe(contributions => {
+        this.news = contributions.reverse();
+      });
+    } else if (!this.isStudentLoggedIn()) {
+      this.userService.getAllStudents().subscribe(value => this.students = value);
+
+    }
+
+    this.coursesService.getAllForUser(this.currentUser.username).subscribe(value => {
+      this.coursesEnrolled = value;
+    });
+
+    this.coursesService.getAll().subscribe(value => {
+      this.allCourses = value;
+    });
+  }
+
+  isStudentLoggedIn() {
+    return this.authService.getCurrentUser().roles.includes('ROLE_STUDENT');
   }
 
 }
